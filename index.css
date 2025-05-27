@@ -1,0 +1,48 @@
+body{
+    background-color: rgb(117, 117, 117);
+}
+
+.main{
+    height: 1087px;
+    width: 1340px;
+    border: solid;
+    border-radius: 10px;
+    border-color: rgba(172, 255, 47, 0.45);
+    color: white;
+}
+
+.player_heads {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 20px;
+}
+
+.name {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.head {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.head>img {
+    image-rendering: pixelated;
+
+    position: relative;
+}
+
+.head0 {
+    top: 0px;
+    left: 0px;
+    scale: 6;
+}
+.head1 {
+    top: 0px;
+    left: -12.4px;
+    scale: 7;
+}
