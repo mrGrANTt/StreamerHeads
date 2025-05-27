@@ -1,5 +1,6 @@
 const WebSocket = require("ws");
 
+// Blousers connecting
 const server = new WebSocket.Server({ port: 8080 });
 const clients = new Set();
 
@@ -12,7 +13,7 @@ server.on("connection", (ws) => {
     });
 });
 
-// Streamer.bot будет подключаться к этому адресу:
+// Streamer.bot conecting:
 const streamerSocket = new WebSocket.Server({ port: 8081 });
 
 streamerSocket.on("connection", (ws) => {
@@ -21,7 +22,7 @@ streamerSocket.on("connection", (ws) => {
     ws.on("message", (data) => {
         console.log("📨 From Streamer:", data.toString());
 
-        // Отправить на всех подключённых браузеров
+        // sending data
         for (let client of clients) {
             client.send(data.toString());
         }

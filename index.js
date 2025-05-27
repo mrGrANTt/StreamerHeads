@@ -1,4 +1,5 @@
 var multiplyer = 1;
+var interval = 10;
 var paused = false;
 
 class Head {
@@ -53,4 +54,4 @@ function move() {
     }
 }
 
-setInterval(move,10)
+setInterval(move,interval)

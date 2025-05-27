@@ -1,9 +1,10 @@
-const socket = new WebSocket("ws://localhost:8080");// Разобратся с Node.js
+const socket = new WebSocket("ws://localhost:8080");
 
 socket.addEventListener("message", (event) => {
     const data = event.data;
-    const [url, name] = data.split("|");
-    alert(name);
+    const [name, url] = data.split("|");
+    //console.log("'" + name + "' '" + url + "'")
+    //alert(name);
     addHead(name, url);
 });
 
@@ -38,5 +39,5 @@ function addHead(name, url) {
 }
 
 function splitImage(name, url) {
-
+    // spliting image to head and head1
 }
