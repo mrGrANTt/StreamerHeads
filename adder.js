@@ -9,33 +9,40 @@ socket.addEventListener("message", (event) => {
 });
 
 function addHead(name, url) {
-    const container = document.createElement("div");
-    container.className = "player_heads";
+    if (url != "") {
+        splitImage(name, url)
+    }
 
-    const p = document.createElement("p");
-    p.className = "name";
-    p.textContent = name;
+    if(!rendered.has(name)) {
+        const container = document.createElement("div");
+        container.className = "player_heads";
 
-    const headDiv = document.createElement("div");
-    headDiv.className = "head";
+        const p = document.createElement("p");
+        p.className = "name";
+        p.textContent = name;
 
-    const imgEl0 = document.createElement("img");
-    imgEl0.src = "heads/" + (url == "" ? "steve" : name) + ".png";
-    imgEl0.className = "head0";
+        const headDiv = document.createElement("div");
+        headDiv.className = "head";
 
-    const imgEl1 = document.createElement("img");
-    imgEl1.src = "heads/" + (url == "" ? "steve" : name) + "1.png";
-    imgEl1.className = "head1";
+        const imgEl0 = document.createElement("img");
+        imgEl0.src = "heads/" + (url == "" ? "steve" : name) + ".png";
+        imgEl0.className = "head0";
 
-    headDiv.appendChild(imgEl0);
-    headDiv.appendChild(imgEl1);
+        const imgEl1 = document.createElement("img");
+        imgEl1.src = "heads/" + (url == "" ? "steve" : name) + "1.png";
+        imgEl1.className = "head1";
 
-    container.appendChild(p);
-    container.appendChild(headDiv);
+        headDiv.appendChild(imgEl0);
+        headDiv.appendChild(imgEl1);
 
-    document.getElementById("main").appendChild(container);
+        container.appendChild(p);
+        container.appendChild(headDiv);
+
+        document.getElementById("main").appendChild(container);
+    }
 
     rendered.set(name, new Head());
+    console.log(rendered)
 }
 
 function splitImage(name, url) {

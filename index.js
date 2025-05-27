@@ -1,5 +1,5 @@
-var multiplyer = 1;
-var interval = 10;
+var multiplyer = 0.5;
+var interval = 1;
 var paused = false;
 
 class Head {
