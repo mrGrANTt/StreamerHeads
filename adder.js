@@ -2,34 +2,35 @@ const socket = new WebSocket("ws://localhost:8080");
 
 socket.addEventListener("message", (event) => {
     const data = event.data;
-    const [name, url] = data.split("|");
+    const name = data.toString();
     //console.log("'" + name + "' '" + url + "'")
     //alert(name);
-    addHead(name, url);
+    addHead(name);
 });
 
-function addHead(name, url) {
-    if (url != "") {
-        splitImage(name, url)
-    }
+function addHead(name) {
+    let imgEl0 = null
+    let imgEl1 = null
 
     if(!rendered.has(name)) {
+        console.log(name + ": load new html")
         const container = document.createElement("div");
         container.className = "player_heads";
+        container.id = name;
 
         const p = document.createElement("p");
         p.className = "name";
         p.textContent = name;
 
-        const headDiv = document.createElement("div");
+        headDiv = document.createElement("div");
         headDiv.className = "head";
 
-        const imgEl0 = document.createElement("img");
-        imgEl0.src = "heads/" + (url == "" ? "steve" : name) + ".png";
+        imgEl0 = document.createElement("img");
+        imgEl0.src = "heads/steve.png";
         imgEl0.className = "head0";
 
-        const imgEl1 = document.createElement("img");
-        imgEl1.src = "heads/" + (url == "" ? "steve" : name) + "1.png";
+        imgEl1 = document.createElement("img");
+        imgEl1.src = "heads/steve1.png";
         imgEl1.className = "head1";
 
         headDiv.appendChild(imgEl0);
@@ -41,10 +42,18 @@ function addHead(name, url) {
         document.getElementById("main").appendChild(container);
     }
 
-    rendered.set(name, new Head());
-    console.log(rendered)
-}
+    if (imgEl0 == null || imgEl1 == null) {
+        let headDiv = document.getElementById(name).lastElementChild;
+        imgEl0 = headDiv.firstElementChild;
+        imgEl1 = headDiv.lastElementChild;
+    }
 
-function splitImage(name, url) {
-    // spliting image to head and head1
+    setTimeout(() => {
+        console.log(name + " set skin")
+        imgEl0.src = `heads/${name}.png?nocache=${Date.now()}`;
+        imgEl1.src = `heads/${name}1.png?nocache=${Date.now()}`;
+    }, 1000)
+
+    rendered.set(name, new Head());
+    console.log(name + " was updatd!")
 }
