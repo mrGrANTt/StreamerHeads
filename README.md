@@ -11,9 +11,9 @@
     ```
 3. Start the server by clicking `start.bat` or use command:
     ```Bash
-    node ./server.js
+    node ./prog/server.js
     ```
-4. In the browser source in OBS Studio, set the file link (something like `file:///path/to/file/index.html`)
+4. In the browser source in OBS Studio, set the file link (something like `htpps://localhost:8080`)
 5. Width: 1346; Height: 1097; Other options as you want.
 6. Install and connect [Streamer.bot](https://streamer.bot/).
 7. Go to Servers/Clients -> WebSocket Clients -> Right Mouse Click -> Add
@@ -37,19 +37,21 @@
                 string msgid = args.ContainsKey("msgId") ? args["msgId"].ToString() : "";
                 string user = args.ContainsKey("user") ? args["user"].ToString() : "";
 
-                if (msgid.Equals("") || user.Equals("")) {
-                    return false;
-                }
-                if (!src.Equals("") && !src.StartsWith("https://s.namemc.com/"))
-                {
-                    CPH.TwitchReplyToMessage("Укажите ссылку на скин c namemc(гайд:)", msgid);
-                    return false;
-                }
+                if (msgid.Equals("") || user.Equals("")) { return false; }
 
-                string data = user + "|" + src;
-            
-                CPH.WebsocketSend(data);
-                CPH.TwitchReplyToMessage("Запрос отправлен!", msgid);
+                string json =
+                    "{\"command\":\"skin\",\"user\":\"" + user + "\""
+                    + (string.IsNullOrWhiteSpace(src)
+                        ? "}"
+                        : ",\"target\":\"" + src + "\"}");
+
+                CPH.WebsocketSend(json);
+
+                CPH.TwitchReplyToMessage(
+                    "Запрос отправлен!",
+                    msgid
+                );
+
                 return true;
             }
         }
@@ -63,11 +65,13 @@
 ### Default use (`!skin`)
 This command will create steve's(or last sender's skin) head with name of command sender.
 
-### With link (`!skin <url to NameMC's skin>`)
+### With Mojang name (`!skin <name>`)
+This command will create head with player's skin with name of command sender. It can be your account or not.
+
+### With link (`!skin <NameMC url>`)
 This command will create head with name of command sender and skin from url.
 Link must be from NameMC. To get link:
 1. Go to skin page
 ![skin page example](image.png)
-2. Hover over the green loading icon
-3. Ckick Right Mouse Click -> Copy link address
-4. Send `!skin <copied link>` to chat
+2. Copy this link
+3. Send in chat `!skin https://namemc.com/skin/eba26e9f57cb0e60`

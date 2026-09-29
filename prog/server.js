@@ -196,13 +196,6 @@ streamerSocket.on("connection", (ws) => {
 
             if (!skinUrl) {
                 console.log(`❌ Skin not found for "${target}"`);
-
-                sendToStreamer({
-                    type: "error",
-                    user: user,
-                    message: "Скин не найден"
-                });
-
                 return;
             }
 
@@ -223,22 +216,10 @@ streamerSocket.on("connection", (ws) => {
                 type: "skin",
                 user: user
             });
-
-            sendToStreamer({
-                type: "success",
-                user: user
-            });
-
             console.log(`✅ "${user}" updated`);
 
         } catch (error) {
-
             console.error("❌ Command error:", error);
-
-            sendToStreamer({
-                type: "error",
-                message: error.message
-            });
         }
     });
 });
@@ -468,14 +449,4 @@ function sendToBrowsers(message) {
             client.send(data);
         }
     }
-}
-
-
-function sendToStreamer(message) {
-
-    // Пока оставляем эту функцию пустой.
-    //
-    // Позже можно сделать нормальные ответы
-    // Streamer.bot и Twitch.
-
 }
