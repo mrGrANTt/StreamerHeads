@@ -1,1 +1,1 @@
-node ./server.js
+node ./prog/server.js
